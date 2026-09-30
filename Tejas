@@ -1,0 +1,216 @@
+import random
+
+print("[{**********---------RAILWAY_TICKET-------------+++++++++++******}]")
+print("¥¥¥¥___Welcome Railway System___¥¥¥¥")
+
+# ट्रेन सीट्स डिक्शनरी
+train_seats = {0: "available", 1: "available", 2: "available", 3: "available", 4: "available"}
+
+# पैसेंजर्स डेटाबेस
+passengers = {
+    "ac": {"rahul": 2233, "lucky": 2334, "jay": 2435},
+    "sleeper": {"krisana": 2133, "ansh": 2234, "ayush": 2335},
+    "general": {"riya": 1, "prachi": 2, "riva": 3}
+}
+
+# किराए की डिक्शनरी
+amount = {"ac": 5000, "sleeper": 1000, "general": 500}
+
+while True:
+    print("\n----------------------------------------------")
+    name = input("Enter your name: ").strip().lower()
+    
+    try:
+        age = int(input("Enter your age: "))
+    except ValueError:
+        print("Error: Age me sirf numbers likhein!")
+        continue
+    
+    coach = input("Enter your coach (ac/sleeper/general): ").strip().lower()
+    
+    if coach not in amount:
+        print("Error: Invalid Coach! Kripya ac, sleeper ya general chunein.")
+        continue
+        
+    pnr_input = input("Already have PNR? Enter PNR number (or press Enter for New Booking): ").strip()
+
+    is_verified = False
+    pnr = None
+
+    # 1. PNR Verification Logic
+    if pnr_input.isdigit():
+        pnr = int(pnr_input)
+        if name in passengers[coach] and passengers[coach][name] == pnr:
+            is_verified = True
+
+    # 2. Status & Payment Check
+    if is_verified:
+        print(f"\n[SUCCESS] Ticket verified! Welcome aboard, {name.title()}.")
+    else:
+        if pnr_input:
+            print("\n[INFO] Details not found! New Ticket Booking Required.")
+            
+        paisa = amount[coach]
+        print(f"Coach ({coach.upper()}) Fare Amount: ₹{paisa}")
+        
+        pay = input("Do you want to pay and confirm booking? (yes/no): ").strip().lower()
+        if pay == "yes":
+            # Auto Generate New PNR
+            pnr = random.randint(1000, 9999)
+            passengers[coach][name] = pnr
+            print(f"Payment Successful! New PNR Generated: {pnr}")
+        else:
+            print("Payment Cancelled! Booking Failed.")
+            continue
+
+    # 3. Auto-Allocate Seat System
+    allocated_seat = None
+    for seat, status in train_seats.items():
+        if status == "available":
+            train_seats[seat] = "booked"
+            allocated_seat = seat
+            break
+
+    if allocated_seat is None:
+        print("\n[SORRY] All seats are full in this train!")
+        continue
+
+    # 4. Receipts Formatting & File Handling (.txt Saving)
+    receipt_content = f"""
+========================================
+          FINAL TICKET RECEIPT          
+========================================
+  Passenger Name : {name.upper()}
+  Age            : {age}
+  Coach          : {coach.upper()}
+  PNR Number     : {pnr}
+  Seat Number    : {allocated_seat}
+  Status         : BOOKED & CONFIRMED
+========================================
+    Dhanyawad! Aapki yatra mangalmay ho. 
+========================================
+"""
+    # स्क्रीन पर प्रिंट करें
+    print(receipt_content)
+
+    # फाइल में सेव करें
+    file_name = f"ticket_{name}_{pnr}.txt"
+    with open(file_name, "w", encoding="utf-8") as f:
+        f.write(receipt_content)
+    print(f"Ticket Saved to File: {file_name}")
+
+    # Next Loop Option
+    choice = input("\nDo you want to book another ticket? (yes/no): ").strip().lower()
+    if choice == "no":
+        print("\n==============================================")
+        print("      THANK YOU! HAVE A SAFE JOURNEY!         ")
+        print("==============================================")
+        break
+import random
+
+print("[{**********---------RAILWAY_TICKET-------------+++++++++++******}]")
+print("¥¥¥¥___Welcome Railway System___¥¥¥¥")
+
+# ट्रेन सीट्स डिक्शनरी
+train_seats = {0: "available", 1: "available", 2: "available", 3: "available", 4: "available"}
+
+# पैसेंजर्स डेटाबेस
+passengers = {
+    "ac": {"rahul": 2233, "lucky": 2334, "jay": 2435},
+    "sleeper": {"krisana": 2133, "ansh": 2234, "ayush": 2335},
+    "general": {"riya": 1, "prachi": 2, "riva": 3}
+}
+
+# किराए की डिक्शनरी
+amount = {"ac": 5000, "sleeper": 1000, "general": 500}
+
+while True:
+    print("\n----------------------------------------------")
+    name = input("Enter your name: ").strip().lower()
+    
+    try:
+        age = int(input("Enter your age: "))
+    except ValueError:
+        print("Error: Age me sirf numbers likhein!")
+        continue
+    
+    coach = input("Enter your coach (ac/sleeper/general): ").strip().lower()
+    
+    if coach not in amount:
+        print("Error: Invalid Coach! Kripya ac, sleeper ya general chunein.")
+        continue
+        
+    pnr_input = input("Already have PNR? Enter PNR number (or press Enter for New Booking): ").strip()
+
+    is_verified = False
+    pnr = None
+
+    # 1. PNR Verification Logic
+    if pnr_input.isdigit():
+        pnr = int(pnr_input)
+        if name in passengers[coach] and passengers[coach][name] == pnr:
+            is_verified = True
+
+    # 2. Status & Payment Check
+    if is_verified:
+        print(f"\n[SUCCESS] Ticket verified! Welcome aboard, {name.title()}.")
+    else:
+        if pnr_input:
+            print("\n[INFO] Details not found! New Ticket Booking Required.")
+            
+        paisa = amount[coach]
+        print(f"Coach ({coach.upper()}) Fare Amount: ₹{paisa}")
+        
+        pay = input("Do you want to pay and confirm booking? (yes/no): ").strip().lower()
+        if pay == "yes":
+            # Auto Generate New PNR
+            pnr = random.randint(1000, 9999)
+            passengers[coach][name] = pnr
+            print(f"Payment Successful! New PNR Generated: {pnr}")
+        else:
+            print("Payment Cancelled! Booking Failed.")
+            continue
+
+    # 3. Auto-Allocate Seat System
+    allocated_seat = None
+    for seat, status in train_seats.items():
+        if status == "available":
+            train_seats[seat] = "booked"
+            allocated_seat = seat
+            break
+
+    if allocated_seat is None:
+        print("\n[SORRY] All seats are full in this train!")
+        continue
+
+    # 4. Receipts Formatting & File Handling (.txt Saving)
+    receipt_content = f"""
+========================================
+          FINAL TICKET RECEIPT          
+========================================
+  Passenger Name : {name.upper()}
+  Age            : {age}
+  Coach          : {coach.upper()}
+  PNR Number     : {pnr}
+  Seat Number    : {allocated_seat}
+  Status         : BOOKED & CONFIRMED
+========================================
+    Dhanyawad! Aapki yatra mangalmay ho. 
+========================================
+"""
+    # स्क्रीन पर प्रिंट करें
+    print(receipt_content)
+
+    # फाइल में सेव करें
+    file_name = f"ticket_{name}_{pnr}.txt"
+    with open(file_name, "w", encoding="utf-8") as f:
+        f.write(receipt_content)
+    print(f"Ticket Saved to File: {file_name}")
+
+    # Next Loop Option
+    choice = input("\nDo you want to book another ticket? (yes/no): ").strip().lower()
+    if choice == "no":
+        print("\n==============================================")
+        print("      THANK YOU! HAVE A SAFE JOURNEY!         ")
+        print("==============================================")
+        break
